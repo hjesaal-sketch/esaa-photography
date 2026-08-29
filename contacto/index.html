@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESAÁ PHOTOGRAPHY · Contacto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        /* ===== ESTILOS EXCLUSIVOS PARA CONTACTO ===== */
+        .contact-section {
+            padding: 60px 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 2.8rem;
+            text-align: center;
+            color: var(--text-primary);
+            transition: color 0.5s ease;
+            margin-bottom: 10px;
+        }
+
+        .contact-section .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 45px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: color 0.5s ease;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .contact-item {
+            background: var(--bg-card);
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.4s ease;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px var(--shadow-hover);
+            border-color: #2E7D32;
+        }
+
+        .contact-item .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .contact-item h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            transition: color 0.5s ease;
+            margin-bottom: 6px;
+        }
+
+        .contact-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.5s ease;
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #2E7D32;
+        }
+
+        /* ===== FORMULARIO ===== */
+        .contact-form {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s ease;
+        }
+
+        .contact-form label {
+            display: block;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            transition: color 0.5s ease;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 22px;
+            background: var(--bg-primary);
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: all 0.4s ease;
+            transition: border-color 0.4s ease, background 0.5s ease, color 0.5s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2E7D32;
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.08);
+        }
+
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .contact-form .btn-submit {
+            display: inline-block;
+            padding: 16px 50px;
+            background: #2E7D32;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+        }
+
+        .contact-form .btn-submit:hover {
+            background: #1B5E20;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 125, 50, 0.25);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .contact-section h2 {
+                font-size: 2.2rem;
+            }
+            .contact-form {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-section h2 {
+                font-size: 1.8rem;
+            }
+            .contact-item {
+                padding: 20px;
+            }
+            .contact-form input,
+            .contact-form textarea {
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="container">
+
+        <header>
+            <div class="logo">
+                <h1>ESAÁ <span>PHOTOGRAPHY</span></h1>
+                <p>Legado · Mirada · Luz</p>
+            </div>
+
+            <div class="header-controls">
+                <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro">🌓</button>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav id="mainNav">
+                <a href="/">Inicio</a>
+                <a href="/legado/">Legado</a>
+                <a href="/mi-trabajo/">Mi Trabajo</a>
+                <a href="/contacto/">Contacto</a>
+            </nav>
+        </header>
+
+        <!-- ===== CONTACTO ===== -->
+        <section class="contact-section">
+            <h2>Contacto</h2>
+            <p class="subtitle">¿Tienes un proyecto en mente? Hablemos.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="icon">📧</span>
+                    <h4>Email</h4>
+                    <p><a href="mailto:henry@esaaphotography.com">henry@esaaphotography.com</a></p>
+                </div>
+
+                <div class="contact-item">
+                    <span class="icon">📱</span>
+                    <h4>Teléfono</h4>
+                    <p><a href="tel:+584241234567">+58 424 123 4567</a></p>
+                </div>
+
+                <div class="contact-item">
+                    <span class="icon">📍</span>
+                    <h4>Ubicación</h4>
+                    <p>Venezuela</p>
+                </div>
+
+                <div class="contact-item">
+                    <span class="icon">📷</span>
+                    <h4>Redes</h4>
+                    <p>
+                        <a href="#" target="_blank">Instagram</a> ·
+                        <a href="#" target="_blank">X</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ===== FORMULARIO ===== -->
+            <form class="contact-form" action="#" method="POST">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+
+                <button type="submit" class="btn-submit">Enviar mensaje</button>
+            </form>
+        </section>
+
+        <footer>
+            <div class="footer-brand">ESAÁ <span>PHOTOGRAPHY</span></div>
+            <div class="footer-divider"></div>
+            <p>© 2026 · Henry Jorge Esaá Lazo</p>
+            <p style="font-size: 0.7rem; color: #666; letter-spacing: 2px;">Hecho con memoria y luz</p>
+            <div class="footer-dev">
+                <span class="dev-heart">✦</span>
+                Desarrollado por
+                <a href="#" target="_blank">Eos Connecting - Dev Henry Esaá</a>
+                <span class="dev-heart">✦</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
