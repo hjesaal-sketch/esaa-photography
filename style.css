@@ -204,7 +204,7 @@ nav a:hover {
         display: flex !important;
     }
 
-    nav {
+    #mainNav {
         position: fixed !important;
         top: 0 !important;
         right: -100% !important;
@@ -223,21 +223,21 @@ nav a:hover {
         box-shadow: -8px 0 40px var(--menu-shadow) !important;
         z-index: 1000 !important;
         border-left: 1px solid var(--border-color) !important;
-        display: flex !important; /* Esto fuerza que el menú se muestre como flex */
+        display: flex !important;
     }
 
-    nav.open {
+    #mainNav.open {
         right: 0 !important;
     }
 
-    nav a {
+    #mainNav a {
         font-size: 1.1rem !important;
         letter-spacing: 2px !important;
         padding: 8px 0 !important;
         border-bottom: 2px solid transparent !important;
         color: var(--text-secondary) !important;
     }
-    nav a:hover {
+    #mainNav a:hover {
         border-bottom-color: #2E7D32 !important;
     }
 
