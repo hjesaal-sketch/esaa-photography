@@ -17,35 +17,43 @@ toggle.addEventListener('click', () => {
 // ============================================
 // 2. MENÚ HAMBURGUESA
 // ============================================
-const hamburger = document.getElementById('hamburger');
-const mainNav = document.getElementById('mainNav');
-const overlay = document.getElementById('menuOverlay');
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    const overlay = document.getElementById('menuOverlay');
 
-function toggleMenu() {
-    hamburger.classList.toggle('active');
-    mainNav.classList.toggle('open');
-    overlay.classList.toggle('active');
-    document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
-}
-
-function closeMenu() {
-    hamburger.classList.remove('active');
-    mainNav.classList.remove('open');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-hamburger.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', closeMenu);
-
-document.querySelectorAll('#mainNav a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-});
-
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        closeMenu();
+    // Verificar si los elementos existen
+    if (!hamburger || !mainNav || !overlay) {
+        console.error('Menú hamburguesa: elementos no encontrados');
+        return;
     }
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mainNav.classList.toggle('open');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mainNav.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('#mainNav a').forEach(function(link) {
+        link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
+    });
 });
 
 // ============================================
