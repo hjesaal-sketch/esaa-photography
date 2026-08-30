@@ -38,7 +38,13 @@
     
 </head>
 <body>
-
+    <!-- ===== TEMA OSCURO INSTANTÁNEO (evita parpadeo) ===== -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <!-- ===== OVERLAY DEL MENÚ ===== -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
