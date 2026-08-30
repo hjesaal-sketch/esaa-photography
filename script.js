@@ -19,45 +19,47 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (ESTILO EOS)
+// 2. MENÚ HAMBURGUESA (CORREGIDO)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
-    const overlay   = document.getElementById('menuOverlay');
+    const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('menuOverlay');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            navLinks.classList.toggle('active');
-            if (overlay) overlay.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-        });
+    if (!hamburger || !navLinks || !overlay) {
+        console.error('❌ Elementos del menú no encontrados');
+        return;
     }
+
+    // Abrir/cerrar menú
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
 
     // Cerrar menú al hacer clic en un enlace
     document.querySelectorAll('#navLinks a').forEach(function(link) {
         link.addEventListener('click', function() {
             navLinks.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
+            overlay.classList.remove('active');
             document.body.style.overflow = '';
         });
     });
 
     // Cerrar menú al hacer clic en el overlay
-    if (overlay) {
-        overlay.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
+    overlay.addEventListener('click', function() {
+        navLinks.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
 
     // Cerrar menú al redimensionar la ventana
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             navLinks.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
+            overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
