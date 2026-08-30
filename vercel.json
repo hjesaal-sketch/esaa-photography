@@ -11,6 +11,32 @@
     {
       "src": "script.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "legado/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "mi-trabajo/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "contacto/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/legado",
+      "destination": "/legado/index.html"
+    },
+    {
+      "source": "/mi-trabajo",
+      "destination": "/mi-trabajo/index.html"
+    },
+    {
+      "source": "/contacto",
+      "destination": "/contacto/index.html"
     }
   ]
 }
