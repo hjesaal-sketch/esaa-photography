@@ -19,59 +19,46 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (CORREGIDO)
+// 2. MENÚ HAMBURGUESA (ESTILO EOS)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
-    const overlay = document.getElementById('menuOverlay');
+    const navLinks  = document.getElementById('navLinks');
+    const overlay   = document.getElementById('menuOverlay');
 
-    if (!hamburger || !mainNav || !overlay) {
-        console.error('❌ Menú hamburguesa: elementos no encontrados');
-        return;
-    }
-
-    function toggleMenu(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        hamburger.classList.toggle('active');
-        mainNav.classList.toggle('open');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
-    }
-
-    function closeMenu() {
-        hamburger.classList.remove('active');
-        mainNav.classList.remove('open');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Eventos para el botón hamburguesa
-    hamburger.addEventListener('click', toggleMenu);
-    hamburger.addEventListener('touchstart', toggleMenu, { passive: true });
-
-    // Eventos para el overlay
-    overlay.addEventListener('click', closeMenu);
-    overlay.addEventListener('touchstart', closeMenu, { passive: true });
-
-    // Eventos para los enlaces del menú (NO cerrar el menú antes de navegar)
-    document.querySelectorAll('#mainNav a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            // No prevenimos el comportamiento por defecto
-            // Cerramos el menú después de que el enlace haya ejecutado su navegación
-            setTimeout(closeMenu, 150);
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
-        link.addEventListener('touchstart', function(e) {
-            // Dejamos que el evento se propague
-            setTimeout(closeMenu, 150);
-        }, { passive: true });
+    }
+
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
     });
+
+    // Cerrar menú al hacer clic en el overlay
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
 
     // Cerrar menú al redimensionar la ventana
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
-            closeMenu();
+            navLinks.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
 });
