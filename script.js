@@ -15,13 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
-    } else {
-        console.warn('Modo oscuro: botón no encontrado');
     }
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA
+// 2. MENÚ HAMBURGUESA (CORREGIDO)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -33,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    function toggleMenu() {
+    function toggleMenu(e) {
+        e.preventDefault();
+        e.stopPropagation();
         hamburger.classList.toggle('active');
         mainNav.classList.toggle('open');
         overlay.classList.toggle('active');
@@ -47,13 +47,28 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     }
 
+    // Eventos para el botón hamburguesa
     hamburger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', closeMenu);
+    hamburger.addEventListener('touchstart', toggleMenu, { passive: true });
 
+    // Eventos para el overlay
+    overlay.addEventListener('click', closeMenu);
+    overlay.addEventListener('touchstart', closeMenu, { passive: true });
+
+    // Eventos para los enlaces del menú (NO cerrar el menú antes de navegar)
     document.querySelectorAll('#mainNav a').forEach(function(link) {
-        link.addEventListener('click', closeMenu);
+        link.addEventListener('click', function(e) {
+            // No prevenimos el comportamiento por defecto
+            // Cerramos el menú después de que el enlace haya ejecutado su navegación
+            setTimeout(closeMenu, 150);
+        });
+        link.addEventListener('touchstart', function(e) {
+            // Dejamos que el evento se propague
+            setTimeout(closeMenu, 150);
+        }, { passive: true });
     });
 
+    // Cerrar menú al redimensionar la ventana
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             closeMenu();
