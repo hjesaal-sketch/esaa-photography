@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (CORREGIDO)
+// 2. MENÚ HAMBURGUESA (CON CIERRE AUTOMÁTICO)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -31,36 +31,43 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Abrir/cerrar menú
-    hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        navLinks.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll('#navLinks a').forEach(function(link) {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Cerrar menú al hacer clic en el overlay
-    overlay.addEventListener('click', function() {
+    // Función para cerrar el menú
+    function closeMenu() {
         navLinks.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    // Función para abrir/cerrar el menú
+    function toggleMenu() {
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    }
+
+    // Evento click en el botón hamburguesa
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
     });
 
-    // Cerrar menú al redimensionar la ventana
+    // Evento click en el overlay (fondo oscuro)
+    overlay.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu();
+    });
+
+    // Cerrar menú al hacer clic en CUALQUIER enlace dentro del menú
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            closeMenu();
+        });
+    });
+
+    // Cerrar menú al redimensionar la ventana a > 768px
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
-            navLinks.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
+            closeMenu();
         }
     });
 });
