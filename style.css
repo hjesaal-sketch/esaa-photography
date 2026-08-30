@@ -224,6 +224,7 @@ nav a:hover {
         z-index: 1000 !important;
         border-left: 1px solid var(--border-color) !important;
         display: flex !important;
+        pointer-events: auto !important;
     }
 
     #mainNav.open {
@@ -236,6 +237,9 @@ nav a:hover {
         padding: 8px 0 !important;
         border-bottom: 2px solid transparent !important;
         color: var(--text-secondary) !important;
+        pointer-events: auto !important;
+        z-index: 1001 !important;
+        position: relative !important;
     }
     #mainNav a:hover {
         border-bottom-color: #2E7D32 !important;
@@ -251,11 +255,13 @@ nav a:hover {
         z-index: 999 !important;
         opacity: 0 !important;
         visibility: hidden !important;
+        pointer-events: none !important;
         transition: opacity 0.3s ease, visibility 0.3s ease !important;
     }
     .menu-overlay.active {
         opacity: 1 !important;
         visibility: visible !important;
+        pointer-events: auto !important;
     }
 }
 
