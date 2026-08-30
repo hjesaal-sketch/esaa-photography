@@ -51,6 +51,10 @@
     {
       "src": "site.webmanifest",
       "use": "@vercel/static"
+    },
+    {
+      "src": "logo.png",
+      "use": "@vercel/static"
     }
   ],
   "rewrites": [
