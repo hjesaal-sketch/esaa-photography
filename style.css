@@ -719,3 +719,26 @@ footer p {
         height: 7px;
     }
 }
+
+/* ===== AJUSTES PARA MÓVIL (header más compacto) ===== */
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.2rem !important;  /* Reduce el tamaño del título */
+        letter-spacing: 2px !important;
+    }
+    
+    .logo a {
+        gap: 8px !important;  /* Reduce el espacio entre el logo y el texto */
+    }
+    
+    .logo img {
+        height: 35px !important;  /* Logo más pequeño en móvil */
+        width: auto !important;
+    }
+    
+    .logo p {
+        font-size: 0.5rem !important;  /* Subtítulo más pequeño */
+        letter-spacing: 2px !important;
+        margin-top: -2px !important;
+    }
+}
