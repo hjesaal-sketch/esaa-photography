@@ -201,59 +201,61 @@ nav a:hover {
    ============================================================ */
 @media (max-width: 768px) {
     .hamburger {
-        display: flex;
+        display: flex !important;
     }
 
     nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 75%;
-        max-width: 320px;
-        height: 100vh;
-        background: var(--menu-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 25px;
-        padding: 40px 20px;
-        transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: -8px 0 40px var(--menu-shadow);
-        z-index: 1000;
-        border-left: 1px solid var(--border-color);
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 75% !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        background: var(--menu-bg) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 25px !important;
+        padding: 40px 20px !important;
+        transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        box-shadow: -8px 0 40px var(--menu-shadow) !important;
+        z-index: 1000 !important;
+        border-left: 1px solid var(--border-color) !important;
+        display: flex !important; /* Esto fuerza que el menú se muestre como flex */
     }
 
     nav.open {
-        right: 0;
+        right: 0 !important;
     }
 
     nav a {
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-        padding: 8px 0;
-        border-bottom: 2px solid transparent;
+        font-size: 1.1rem !important;
+        letter-spacing: 2px !important;
+        padding: 8px 0 !important;
+        border-bottom: 2px solid transparent !important;
+        color: var(--text-secondary) !important;
     }
     nav a:hover {
-        border-bottom-color: #2E7D32;
+        border-bottom-color: #2E7D32 !important;
     }
 
     .menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 999;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        z-index: 999 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: opacity 0.3s ease, visibility 0.3s ease !important;
     }
     .menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 }
 
