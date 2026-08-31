@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (CON CIERRE AUTOMÁTICO)
+// 2. MENÚ HAMBURGUESA (CON CIERRE COMPLETO)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Función para cerrar el menú
+    // Función para cerrar el menú COMPLETAMENTE
     function closeMenu() {
+        hamburger.classList.remove('active');  // 👈 Vuelve a las 3 rayas
         navLinks.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para abrir/cerrar el menú
     function toggleMenu() {
+        hamburger.classList.toggle('active');
         navLinks.classList.toggle('active');
         overlay.classList.toggle('active');
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
@@ -64,10 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Cerrar menú al redimensionar la ventana a > 768px
+    // Cerrar menú y restaurar estado al redimensionar a desktop
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
-            closeMenu();
+            closeMenu();  // Cierra el menú y restaura la hamburguesa
         }
     });
 });

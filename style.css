@@ -199,12 +199,51 @@ nav a:hover {
 /* ============================================================
    MENÚ RESPONSIVE (CORREGIDO)
    ============================================================ */
+
+/* Estilos para desktop (por defecto) */
+.nav-links {
+    display: flex;
+    flex-direction: row;  /* 👈 Esto es clave para desktop */
+    gap: 30px;
+    list-style: none;
+    align-items: center;
+    position: static;  /* 👈 Restaura la posición normal en desktop */
+    width: auto;
+    height: auto;
+    background: transparent;
+    backdrop-filter: none;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    transform: none !important;
+    pointer-events: auto;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: #2E7D32;
+    border-bottom-color: #2E7D32;
+}
+
+/* Estilos para móvil (se activan en < 768px) */
 @media (max-width: 768px) {
     .hamburger {
         display: flex !important;
     }
 
-    #navLinks {
+    .nav-links {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
@@ -214,7 +253,7 @@ nav a:hover {
         background: var(--menu-bg) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        flex-direction: column !important;
+        flex-direction: column !important;  /* 👈 En móvil, vertical */
         justify-content: center !important;
         align-items: center !important;
         gap: 25px !important;
@@ -224,21 +263,21 @@ nav a:hover {
         border-right: 1px solid var(--border-color) !important;
         display: flex !important;
         pointer-events: auto !important;
-        transform: none !important;
+        transform: translateX(-100%) !important;  /* 👈 Oculto a la izquierda */
         transition: transform 0.3s ease !important;
     }
 
-    #navLinks.active {
-        transform: translateX(0) !important;
+    .nav-links.active {
+        transform: translateX(0) !important;  /* 👈 Visible al abrir */
     }
 
-    #navLinks li {
+    .nav-links li {
         width: 100% !important;
         list-style: none !important;
         text-align: center !important;
     }
 
-    #navLinks a {
+    .nav-links a {
         font-size: 1.1rem !important;
         letter-spacing: 2px !important;
         padding: 12px 0 !important;
@@ -252,7 +291,7 @@ nav a:hover {
         transition: border-color 0.3s ease !important;
     }
 
-    #navLinks a:hover {
+    .nav-links a:hover {
         border-bottom-color: #2E7D32 !important;
     }
 
