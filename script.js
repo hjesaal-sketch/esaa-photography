@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (CON CIERRE COMPLETO)
+// 2. MENÚ HAMBURGUESA (CON NAVEGACIÓN FUNCIONAL)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para cerrar el menú COMPLETAMENTE
     function closeMenu() {
-        hamburger.classList.remove('active');  // 👈 Vuelve a las 3 rayas
+        hamburger.classList.remove('active');
         navLinks.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
@@ -59,17 +59,21 @@ document.addEventListener('DOMContentLoaded', function() {
         closeMenu();
     });
 
-    // Cerrar menú al hacer clic en CUALQUIER enlace dentro del menú
+    // Cerrar menú al hacer clic en un enlace PERMITIENDO LA NAVEGACIÓN
     document.querySelectorAll('#navLinks a').forEach(function(link) {
-        link.addEventListener('click', function() {
-            closeMenu();
+        link.addEventListener('click', function(e) {
+            // NO prevenimos el comportamiento por defecto (navegación)
+            // Cerramos el menú después de un pequeño retraso para que el enlace navegue
+            setTimeout(function() {
+                closeMenu();
+            }, 200);  // 👈 200ms es suficiente para que el navegador procese el clic
         });
     });
 
-    // Cerrar menú y restaurar estado al redimensionar a desktop
+    // Cerrar menú al redimensionar a desktop
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
-            closeMenu();  // Cierra el menú y restaura la hamburguesa
+            closeMenu();
         }
     });
 });
