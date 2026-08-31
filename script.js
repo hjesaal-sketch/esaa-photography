@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (CON NAVEGACIÓN FUNCIONAL)
+// 2. MENÚ HAMBURGUESA (CORREGIDO)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -59,14 +59,24 @@ document.addEventListener('DOMContentLoaded', function() {
         closeMenu();
     });
 
+    // ===== LA PARTE QUE CAMBIA =====
     // Cerrar menú al hacer clic en un enlace PERMITIENDO LA NAVEGACIÓN
     document.querySelectorAll('#navLinks a').forEach(function(link) {
         link.addEventListener('click', function(e) {
-            // NO prevenimos el comportamiento por defecto (navegación)
-            // Cerramos el menú después de un pequeño retraso para que el enlace navegue
-            setTimeout(function() {
-                closeMenu();
-            }, 200);  // 👈 200ms es suficiente para que el navegador procese el clic
+            // Guardamos el href del enlace
+            const href = this.getAttribute('href');
+            
+            // Cerramos el menú inmediatamente
+            closeMenu();
+            
+            // Navegamos después de un breve retraso para que el menú se cierre visualmente
+            if (href && !href.startsWith('#')) {
+                e.preventDefault();
+                setTimeout(function() {
+                    window.location.href = href;
+                }, 150);
+            }
+            // Si es un ancla (#), dejamos que el navegador maneje el scroll
         });
     });
 
