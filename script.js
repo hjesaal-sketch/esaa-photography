@@ -19,164 +19,145 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (PÁGINAS INDEPENDIENTES)
+// 2. MENÚ HAMBURGUESA (COMO EOS)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
-    const overlay = document.getElementById('menuOverlay');
 
-    if (!hamburger || !navLinks || !overlay) {
-        console.error('❌ Elementos del menú no encontrados');
-        return;
-    }
-
-    // Función para cerrar el menú COMPLETAMENTE
-    function closeMenu() {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Función para abrir/cerrar el menú
-    function toggleMenu() {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-    }
-
-    // Evento click en el botón hamburguesa
-    hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    // Evento click en el overlay (fondo oscuro)
-    overlay.addEventListener('click', function(e) {
-        e.stopPropagation();
-        closeMenu();
-    });
-
-    // ===== LA PARTE QUE CAMBIA =====    // Cerrar menú al hacer clic en un enlace (NAVEGACIÓN NATIVA)
-    document.querySelectorAll('#navLinks a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            // Guardamos el href
-            const href = this.getAttribute('href');
-            
-            // Si es un enlace a otra página (no es un ancla #)
-            if (href && !href.startsWith('#')) {
-                // Cerramos el menú inmediatamente
-                e.preventDefault(); // 👈 Prevenimos la navegación nativa
-                closeMenu();
-                // Navegamos después de cerrar el menú
-                setTimeout(function() {
-                    window.location.href = href;
-                }, 150);
-            } else {
-                // Si es un ancla (#), prevenimos el comportamiento por defecto
-                e.preventDefault();
-                closeMenu();
-            }
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
         });
-    });
-
-    // Cerrar menú al redimensionar a desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            closeMenu();
-        }
-    });
+    }
 });
 
 // ============================================
-// 3. CARRUSEL CON FADE AUTOMÁTICO
+// 3. SISTEMA DE NAVEGACIÓN SPA
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    let slideInterval;
-    const INTERVAL_TIME = 4500;
+    const mainContent = document.getElementById('main-content');
+    const navLinks = document.querySelectorAll('[data-page]');
 
-    if (slides.length === 0 || dots.length === 0) {
-        console.warn('Carrusel: no se encontraron slides o dots');
-        return;
+    // Función para cargar una página
+    function loadPage(page) {
+        fetch(`/pages/${page}.html`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`No se pudo cargar ${page}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                mainContent.innerHTML = html;
+                // Cerrar menú móvil después de cargar
+                const navLinks = document.getElementById('navLinks');
+                if (navLinks) navLinks.classList.remove('active');
+                // Ejecutar scripts específicos de la página (carrusel, galería)
+                initPageScripts();
+            })
+            .catch(error => {
+                console.error('Error cargando la página:', error);
+                mainContent.innerHTML = `<p>Error cargando la página. Intenta de nuevo.</p>`;
+            });
     }
 
-    function goToSlide(index) {
-        slides.forEach(function(s) { s.classList.remove('active'); });
-        dots.forEach(function(d) { d.classList.remove('active'); });
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        currentSlide = index;
-    }
+    // Función para inicializar scripts específicos de la página
+    function initPageScripts() {
+        // Carrusel
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot');
+        if (slides.length > 0 && dots.length > 0) {
+            let currentSlide = 0;
+            const INTERVAL_TIME = 4500;
+            let slideInterval;
 
-    function nextSlide() {
-        const next = (currentSlide + 1) % slides.length;
-        goToSlide(next);
-    }
+            function goToSlide(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
 
-    function startAutoplay() {
-        stopAutoplay();
-        slideInterval = setInterval(nextSlide, INTERVAL_TIME);
-    }
+            function nextSlide() {
+                const next = (currentSlide + 1) % slides.length;
+                goToSlide(next);
+            }
 
-    function stopAutoplay() {
-        if (slideInterval) {
-            clearInterval(slideInterval);
-            slideInterval = null;
-        }
-    }
+            function startAutoplay() {
+                if (slideInterval) clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, INTERVAL_TIME);
+            }
 
-    dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-            const index = parseInt(dot.getAttribute('data-index'));
-            goToSlide(index);
+            function stopAutoplay() {
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                    slideInterval = null;
+                }
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const index = parseInt(dot.getAttribute('data-index'));
+                    goToSlide(index);
+                    startAutoplay();
+                });
+            });
+
+            const heroSection = document.getElementById('hero');
+            if (heroSection) {
+                heroSection.addEventListener('mouseenter', stopAutoplay);
+                heroSection.addEventListener('mouseleave', startAutoplay);
+            }
+
             startAutoplay();
-        });
-    });
+        }
 
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-        heroSection.addEventListener('mouseenter', stopAutoplay);
-        heroSection.addEventListener('mouseleave', startAutoplay);
+        // Galería con fade-in
+        const galleryCards = document.querySelectorAll('.photo-card');
+        if (galleryCards.length > 0) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const delay = parseInt(card.getAttribute('data-delay')) || 0;
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, delay);
+                        observer.unobserve(card);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            galleryCards.forEach(card => observer.observe(card));
+        }
     }
 
-    startAutoplay();
-});
-
-// ============================================
-// 4. FADE-IN ESCALONADO DE LA GALERÍA
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const galleryCards = document.querySelectorAll('.photo-card');
-
-    if (galleryCards.length === 0) {
-        console.warn('Galería: no se encontraron tarjetas');
-        return;
-    }
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                const card = entry.target;
-                const delay = parseInt(card.getAttribute('data-delay')) || 0;
-
-                setTimeout(function() {
-                    card.classList.add('visible');
-                }, delay);
-
-                observer.unobserve(card);
+    // Evento click en los enlaces del menú
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.getAttribute('data-page');
+            if (page) {
+                loadPage(page);
+                // Actualizar URL sin recargar
+                history.pushState({ page }, '', `/${page}`);
             }
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
     });
 
-    galleryCards.forEach(function(card) {
-        observer.observe(card);
+    // Manejar navegación con botones de atrás/adelante
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.page) {
+            loadPage(event.state.page);
+        }
     });
+
+    // Cargar página inicial
+    const initialPage = window.location.pathname.replace('/', '') || 'home';
+    loadPage(initialPage);
 });

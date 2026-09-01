@@ -3,54 +3,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- ===== TÍTULO Y DESCRIPCIÓN ===== -->
-    <title>ESAÁ PHOTOGRAPHY · Legado fotográfico de Henry Joe Esaá</title>
-    <meta name="description" content="ESAÁ PHOTOGRAPHY: Un homenaje a Henry Joe Esaá Francés y el portafolio de Henry Jorge Esaá Lazo. Dos generaciones de fotografía en un solo sitio." />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Henry Jorge Esaá Lazo" />
-    
-    <!-- ===== OPEN GRAPH ===== -->
-    <meta property="og:title" content="ESAÁ PHOTOGRAPHY · Legado fotográfico de Henry Joe Esaá" />
-    <meta property="og:description" content="Un homenaje a Henry Joe Esaá Francés y el portafolio de Henry Jorge Esaá Lazo. Dos generaciones de fotografía." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://esaa-photography.vercel.app/" />
-    <meta property="og:image" content="https://esaa-photography.vercel.app/public/images/og-image.jpg" />
-    
-    <!-- ===== TWITTER CARDS ===== -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ESAÁ PHOTOGRAPHY · Legado fotográfico de Henry Joe Esaá" />
-    <meta name="twitter:description" content="Un homenaje a Henry Joe Esaá Francés y el portafolio de Henry Jorge Esaá Lazo. Dos generaciones de fotografía." />
-    <meta name="twitter:image" content="https://esaa-photography.vercel.app/public/images/og-image.jpg" />
-    
-    <!-- ===== FUENTES Y ESTILOS ===== -->
+    <title>ESAÁ PHOTOGRAPHY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css" />
-    
-    <!-- ===== FAVICON ===== -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-    <!-- ===== TEMA OSCURO INSTANTÁNEO (evita parpadeo) ===== -->
     <script>
         (function() {
             const theme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
-    <!-- ===== OVERLAY DEL MENÚ ===== -->
+
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="container">
-
-        <!-- ===== HEADER ===== -->
+        <!-- HEADER -->
         <header>
             <div class="logo">
                 <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 12px;">
@@ -72,130 +42,19 @@
             </div>
 
             <ul class="nav-links" id="navLinks">
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/legado/">Legado</a></li>
-                <li><a href="/mi-trabajo/">Mi Trabajo</a></li>
-                <li><a href="/contacto/">Contacto</a></li>
+                <li><a href="#" data-page="home">Inicio</a></li>
+                <li><a href="#" data-page="legado">Legado</a></li>
+                <li><a href="#" data-page="mi-trabajo">Mi Trabajo</a></li>
+                <li><a href="#" data-page="contacto">Contacto</a></li>
             </ul>
         </header>
 
-        <!-- ===== HERO ===== -->
-        <section class="hero" id="hero">
-            <div class="hero-slides">
-                <div class="hero-slide active" data-index="0">
-                    <img src="/public/images/hero-1.jpg" alt="Hero 1" />
-                </div>
-                <div class="hero-slide" data-index="1">
-                    <img src="/public/images/hero-2.jpg" alt="Hero 2" />
-                </div>
-                <div class="hero-slide" data-index="2">
-                    <img src="/public/images/hero-3.jpg" alt="Hero 3" />
-                </div>
-            </div>
+        <!-- CONTENIDO DINÁMICO -->
+        <main id="main-content">
+            <!-- Aquí se cargará el contenido según la sección -->
+        </main>
 
-            <div class="hero-overlay"></div>
-
-            <div class="hero-indicators" id="heroIndicators">
-                <button class="dot active" data-index="0" aria-label="Slide 1"></button>
-                <button class="dot" data-index="1" aria-label="Slide 2"></button>
-                <button class="dot" data-index="2" aria-label="Slide 3"></button>
-            </div>
-
-            <div class="hero-content">
-                <h2>
-                    Dos miradas,<br />
-                    un mismo <em>legado</em>
-                </h2>
-                <p>
-                    Henry Joe Esaá Francés · Henry Jorge Esaá Lazo<br />
-                    Una historia de luz que continúa.
-                </p>
-                <a href="#" class="btn-hero">Explorar el legado</a>
-            </div>
-        </section>
-
-        <!-- ===== GALERÍA ===== -->
-        <h2 class="section-title">Galería</h2>
-        <p class="section-subtitle">Una selección de obras · Legado y presente</p>
-
-        <div class="gallery-grid" id="galleryGrid">
-            <div class="photo-card" data-delay="0">
-                <div class="image-wrapper">
-                    <img src="/public/images/legado-1.jpg" alt="El Mirador" />
-                </div>
-                <div class="info">
-                    <h3>El Mirador</h3>
-                    <p>Henry Joe · 1998</p>
-                    <span class="badge legacy">Legado</span>
-                </div>
-            </div>
-
-            <div class="photo-card" data-delay="150">
-                <div class="image-wrapper">
-                    <img src="/public/images/legado-2.jpg" alt="Luz en el Bosque" />
-                </div>
-                <div class="info">
-                    <h3>Luz en el Bosque</h3>
-                    <p>Henry Joe · 2001</p>
-                    <span class="badge legacy">Legado</span>
-                </div>
-            </div>
-
-            <div class="photo-card" data-delay="300">
-                <div class="image-wrapper">
-                    <img src="/public/images/mi-trabajo-1.jpg" alt="Nuevo Horizonte" />
-                </div>
-                <div class="info">
-                    <h3>Nuevo Horizonte</h3>
-                    <p>Henry Jorge · 2025</p>
-                    <span class="badge work">Mi Trabajo</span>
-                </div>
-            </div>
-
-            <div class="photo-card" data-delay="450">
-                <div class="image-wrapper">
-                    <img src="/public/images/mi-trabajo-2.jpg" alt="Minimalismo" />
-                </div>
-                <div class="info">
-                    <h3>Minimalismo</h3>
-                    <p>Henry Jorge · 2024</p>
-                    <span class="badge work">Mi Trabajo</span>
-                </div>
-            </div>
-
-            <div class="photo-card" data-delay="600">
-                <div class="image-wrapper">
-                    <img src="/public/images/legado-3.jpg" alt="Atardecer en el Valle" />
-                </div>
-                <div class="info">
-                    <h3>Atardecer en el Valle</h3>
-                    <p>Henry Joe · 1999</p>
-                    <span class="badge legacy">Legado</span>
-                </div>
-            </div>
-
-            <div class="photo-card" data-delay="750">
-                <div class="image-wrapper">
-                    <img src="/public/images/mi-trabajo-3.jpg" alt="Líneas y Sombras" />
-                </div>
-                <div class="info">
-                    <h3>Líneas y Sombras</h3>
-                    <p>Henry Jorge · 2024</p>
-                    <span class="badge work">Mi Trabajo</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== HOMENAJE ===== -->
-        <div class="tribute">
-            <h3>En memoria de <span>Henry Joe Esaá Francés</span></h3>
-            <p>
-                Su mirada y su luz viven en cada fotografía. Este espacio es un puente entre su legado
-                y el camino que continúo. Bienvenido a la historia de dos generaciones de fotógrafos.
-            </p>
-        </div>
-
-        <!-- ===== FOOTER ===== -->
+        <!-- FOOTER -->
         <footer>
             <div class="footer-brand">ESAÁ <span>PHOTOGRAPHY</span></div>
             <div class="footer-divider"></div>
@@ -208,10 +67,8 @@
                 <span class="dev-heart">✦</span>
             </div>
         </footer>
-
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
     <script src="/script.js"></script>
 </body>
 </html>
