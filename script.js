@@ -59,8 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         closeMenu();
     });
 
-    // ===== LA PARTE QUE CAMBIA =====
-    // Cerrar menú al hacer clic en un enlace (NAVEGACIÓN NATIVA)
+    // ===== LA PARTE QUE CAMBIA =====    // Cerrar menú al hacer clic en un enlace (NAVEGACIÓN NATIVA)
     document.querySelectorAll('#navLinks a').forEach(function(link) {
         link.addEventListener('click', function(e) {
             // Guardamos el href
@@ -69,9 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Si es un enlace a otra página (no es un ancla #)
             if (href && !href.startsWith('#')) {
                 // Cerramos el menú inmediatamente
+                e.preventDefault(); // 👈 Prevenimos la navegación nativa
                 closeMenu();
-                // NO USAMOS e.preventDefault() PARA QUE EL NAVEGADOR NAVEGUE NORMALMENTE
-                // El navegador cargará la nueva página automáticamente
+                // Navegamos después de cerrar el menú
+                setTimeout(function() {
+                    window.location.href = href;
+                }, 150);
             } else {
                 // Si es un ancla (#), prevenimos el comportamiento por defecto
                 e.preventDefault();
