@@ -19,154 +19,118 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (SIMPLE)
+// 2. MENÚ HAMBURGUESA
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('menuOverlay');
 
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function(e) {
             e.stopPropagation();
             navLinks.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        });
+
+        document.querySelectorAll('#navLinks a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
 });
 
 // ============================================
-// 3. SISTEMA DE NAVEGACIÓN SPA (LO QUE FALTABA)
+// 3. CARRUSEL
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    const mainContent = document.getElementById('main-content');
-    const navLinks = document.querySelectorAll('[data-page]');
-    const pageUrls = {
-        'home': '/pages/home.html',
-        'legado': '/pages/legado.html',
-        'mi-trabajo': '/pages/mi-trabajo.html',
-        'contacto': '/pages/contacto.html'
-    };
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.dot');
+    if (slides.length === 0 || dots.length === 0) return;
 
-    // Función para cargar una página
-    function loadPage(page) {
-        const url = pageUrls[page];
-        if (!url) return;
+    let currentSlide = 0;
+    let slideInterval;
+    const INTERVAL_TIME = 4500;
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`No se pudo cargar ${page}`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                mainContent.innerHTML = html;
-                // Cerrar menú móvil
-                const nav = document.getElementById('navLinks');
-                if (nav) nav.classList.remove('active');
-                // Ejecutar scripts específicos
-                initPageScripts();
-            })
-            .catch(error => {
-                console.error('Error cargando la página:', error);
-                mainContent.innerHTML = `<p>Error cargando la página. Intenta de nuevo.</p>`;
-            });
+    function goToSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
     }
 
-    // Función para inicializar scripts específicos (carrusel, galería)
-    function initPageScripts() {
-        // Carrusel
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.dot');
-        if (slides.length > 0 && dots.length > 0) {
-            let currentSlide = 0;
-            let slideInterval;
-            const INTERVAL_TIME = 4500;
+    function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        goToSlide(next);
+    }
 
-            function goToSlide(index) {
-                slides.forEach(s => s.classList.remove('active'));
-                dots.forEach(d => d.classList.remove('active'));
-                slides[index].classList.add('active');
-                dots[index].classList.add('active');
-                currentSlide = index;
-            }
+    function startAutoplay() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, INTERVAL_TIME);
+    }
 
-            function nextSlide() {
-                const next = (currentSlide + 1) % slides.length;
-                goToSlide(next);
-            }
+    function stopAutoplay() {
+        if (slideInterval) { clearInterval(slideInterval); slideInterval = null; }
+    }
 
-            function startAutoplay() {
-                if (slideInterval) clearInterval(slideInterval);
-                slideInterval = setInterval(nextSlide, INTERVAL_TIME);
-            }
-
-            function stopAutoplay() {
-                if (slideInterval) {
-                    clearInterval(slideInterval);
-                    slideInterval = null;
-                }
-            }
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const index = parseInt(dot.getAttribute('data-index'));
-                    goToSlide(index);
-                    startAutoplay();
-                });
-            });
-
-            const heroSection = document.getElementById('hero');
-            if (heroSection) {
-                heroSection.addEventListener('mouseenter', stopAutoplay);
-                heroSection.addEventListener('mouseleave', startAutoplay);
-            }
-
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(dot.getAttribute('data-index'));
+            goToSlide(index);
             startAutoplay();
-        }
-
-        // Galería con fade-in
-        const galleryCards = document.querySelectorAll('.photo-card');
-        if (galleryCards.length > 0) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const card = entry.target;
-                        const delay = parseInt(card.getAttribute('data-delay')) || 0;
-                        setTimeout(() => {
-                            card.classList.add('visible');
-                        }, delay);
-                        observer.unobserve(card);
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            galleryCards.forEach(card => observer.observe(card));
-        }
-    }
-
-    // Evento click en los enlaces del menú
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.getAttribute('data-page');
-            if (page) {
-                loadPage(page);
-                // Actualizar URL sin recargar
-                history.pushState({ page }, '', `/${page}`);
-            }
         });
     });
 
-    // Manejar navegación con botones de atrás/adelante
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.page) {
-            loadPage(event.state.page);
-        }
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+        heroSection.addEventListener('mouseenter', stopAutoplay);
+        heroSection.addEventListener('mouseleave', startAutoplay);
+    }
+
+    startAutoplay();
+});
+
+// ============================================
+// 4. GALERÍA FADE-IN
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryCards = document.querySelectorAll('.photo-card');
+    if (galleryCards.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                const delay = parseInt(card.getAttribute('data-delay')) || 0;
+                setTimeout(() => card.classList.add('visible'), delay);
+                observer.unobserve(card);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
     });
 
-    // Cargar página inicial
-    const initialPage = window.location.pathname.replace('/', '') || 'home';
-    loadPage(initialPage);
+    galleryCards.forEach(card => observer.observe(card));
 });
