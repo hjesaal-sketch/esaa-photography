@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 2. MENÚ HAMBURGUESA (COMO EOS)
+// 2. MENÚ HAMBURGUESA (SIMPLE)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
@@ -34,15 +34,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// 3. SISTEMA DE NAVEGACIÓN SPA
+// 3. SISTEMA DE NAVEGACIÓN SPA (LO QUE FALTABA)
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.getElementById('main-content');
     const navLinks = document.querySelectorAll('[data-page]');
+    const pageUrls = {
+        'home': '/pages/home.html',
+        'legado': '/pages/legado.html',
+        'mi-trabajo': '/pages/mi-trabajo.html',
+        'contacto': '/pages/contacto.html'
+    };
 
     // Función para cargar una página
     function loadPage(page) {
-        fetch(`/pages/${page}.html`)
+        const url = pageUrls[page];
+        if (!url) return;
+
+        fetch(url)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`No se pudo cargar ${page}`);
@@ -51,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 mainContent.innerHTML = html;
-                // Cerrar menú móvil después de cargar
-                const navLinks = document.getElementById('navLinks');
-                if (navLinks) navLinks.classList.remove('active');
-                // Ejecutar scripts específicos de la página (carrusel, galería)
+                // Cerrar menú móvil
+                const nav = document.getElementById('navLinks');
+                if (nav) nav.classList.remove('active');
+                // Ejecutar scripts específicos
                 initPageScripts();
             })
             .catch(error => {
@@ -63,15 +72,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Función para inicializar scripts específicos de la página
+    // Función para inicializar scripts específicos (carrusel, galería)
     function initPageScripts() {
         // Carrusel
         const slides = document.querySelectorAll('.hero-slide');
         const dots = document.querySelectorAll('.dot');
         if (slides.length > 0 && dots.length > 0) {
             let currentSlide = 0;
-            const INTERVAL_TIME = 4500;
             let slideInterval;
+            const INTERVAL_TIME = 4500;
 
             function goToSlide(index) {
                 slides.forEach(s => s.classList.remove('active'));
