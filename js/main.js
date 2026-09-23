@@ -26,38 +26,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.getElementById('navLinks');
     const overlay = document.getElementById('menuOverlay');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            navLinks.classList.toggle('active');
-            if (overlay) overlay.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    if (!hamburger || !navLinks) return;
+
+    function closeMenu() {
+        navLinks.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        if (overlay) overlay.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            // No prevenimos la navegación, solo cerramos el menú después
+            setTimeout(closeMenu, 100);
         });
+    });
 
-        document.querySelectorAll('#navLinks a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navLinks.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-
-        if (overlay) {
-            overlay.addEventListener('click', function() {
-                navLinks.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
-
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                navLinks.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            closeMenu();
         });
     }
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
+    });
 });
 
 // ============================================

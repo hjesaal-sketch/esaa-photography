@@ -203,11 +203,11 @@ nav a:hover {
 /* Estilos para desktop (por defecto) */
 .nav-links {
     display: flex;
-    flex-direction: row;  /* 👈 Esto es clave para desktop */
+    flex-direction: row;
     gap: 30px;
     list-style: none;
     align-items: center;
-    position: static;  /* 👈 Restaura la posición normal en desktop */
+    position: static;
     width: auto;
     height: auto;
     background: transparent;
@@ -253,7 +253,7 @@ nav a:hover {
         background: var(--menu-bg) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        flex-direction: column !important;  /* 👈 En móvil, vertical */
+        flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         gap: 25px !important;
@@ -263,12 +263,12 @@ nav a:hover {
         border-right: 1px solid var(--border-color) !important;
         display: flex !important;
         pointer-events: auto !important;
-        transform: translateX(-100%) !important;  /* 👈 Oculto a la izquierda */
+        transform: translateX(-100%) !important;
         transition: transform 0.3s ease !important;
     }
 
     .nav-links.active {
-        transform: translateX(0) !important;  /* 👈 Visible al abrir */
+        transform: translateX(0) !important;
     }
 
     .nav-links li {
@@ -365,7 +365,7 @@ nav a:hover {
 }
 
 [data-theme="dark"] .hero-slide img {
-    filter: brightness(0.9) saturate(0.95);  
+    filter: brightness(0.9) saturate(0.95);
 }
 
 .hero-overlay {
@@ -785,21 +785,21 @@ footer p {
 /* ===== AJUSTES PARA MÓVIL (header más compacto) ===== */
 @media (max-width: 768px) {
     .logo h1 {
-        font-size: 1.2rem !important;  /* Reduce el tamaño del título */
+        font-size: 1.2rem !important;
         letter-spacing: 2px !important;
     }
-    
+
     .logo a {
-        gap: 8px !important;  /* Reduce el espacio entre el logo y el texto */
+        gap: 8px !important;
     }
-    
+
     .logo img {
-        height: 35px !important;  /* Logo más pequeño en móvil */
+        height: 35px !important;
         width: auto !important;
     }
-    
+
     .logo p {
-        font-size: 0.5rem !important;  /* Subtítulo más pequeño */
+        font-size: 0.5rem !important;
         letter-spacing: 2px !important;
         margin-top: -2px !important;
     }
